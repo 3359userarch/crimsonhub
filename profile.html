@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+
+  <!-- Core styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+
+  <!-- Background -->
+  <video class="video-bg" autoplay muted loop>
+    <source src="zebra/video/demon-slayer.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-left">
+      <div class="logo">CRIMSON STUDY HUB</div>
+    </div>
+    <div class="nav-links">
+      <button onclick="goHome()">Home</button>
+    </div>
+  </nav>
+
+  <!-- PROFILE SECTION -->
+  <section class="section active">
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <img src="zebra/images/images.jpg" class="profile-pic">
+      <h3 class="profile-name" id="profileNameText">Student</h3>
+
+      <ul class="profile-menu">
+        <li onclick="showSection('info')">Profile</li>
+        <li onclick="showSection('academic')">Academics</li>
+        <li onclick="showSection('feedback')">Feedback</li>
+        <li onclick="showSection('about')">About</li>
+        <li onclick="showSection('memories')">Memories</li>
+      </ul>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="profile-details">
+
+      <!-- PROFILE -->
+      <div class="detail-box active" id="info">
+        <h4>Profile Info</h4>
+        <p><b>Name:</b> <span id="nameText">-</span></p>
+        <p><b>Institute:</b> <span id="instituteText">-</span></p>
+      </div>
+
+      <!-- ACADEMICS -->
+      <div class="detail-box" id="academic">
+        <h4>Academic Info</h4>
+        <p><b>Stream:</b> <span id="streamText">-</span></p>
+        <p><b>Subject:</b> <span id="subjectText">-</span></p>
+        <p><b>Semester:</b> <span id="semesterText">-</span></p>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="detail-box" id="feedback">
+        <h4>Feedback</h4>
+        <textarea id="feedbackText" placeholder="Write your feedback..."></textarea>
+        <button onclick="saveFeedback()">Submit</button>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="detail-box" id="about">
+        <h4>About Us</h4>
+        <p>
+          We are a passionate student team building this platform together.
+          Late nights, bugs, fixes — this is our journey 🚀
+        </p>
+      </div>
+
+      <!-- MEMORIES -->
+      <div class="detail-box" id="memories">
+        <h4>Team Memories 💙</h4>
+
+        <!-- LOCK -->
+        <div id="memoriesLocked" style="display:none;opacity:0.7;">
+          🔒 Memories are only available for <b>Gossaigaon Institute / College</b>
+        </div>
+
+        <!-- CONTENT -->
+        <div id="memoriesContent" style="display:none;">
+          <div class="grid" id="memoriesGrid">
+            <img src="memories/college-campus.jpg" onclick="openViewer(this.src)">
+            <img src="memories/freshers.jpg" onclick="openViewer(this.src)">
+            <img src="memories/freshers-1.jpg" onclick="openViewer(this.src)">
+            <img src="memories/kalimpong-1.jpg" onclick="openViewer(this.src)">
+            <img src="memories/kalimpong-2.jpg" onclick="openViewer(this.src)">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FULLSCREEN IMAGE VIEWER -->
+  <div id="imageViewer" class="image-viewer" onclick="closeViewer()">
+    <span class="nav prev" onclick="event.stopPropagation(); prevImage()">❮</span>
+    <img id="viewerImg" src="">
+    <span class="nav next" onclick="event.stopPropagation(); nextImage()">❯</span>
+  </div>
+
+  <!-- JS -->
+  <script src="js/profile.js"></script>
+</body>
+</html>

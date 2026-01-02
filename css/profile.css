@@ -1,0 +1,158 @@
+/* ================= PROFILE CARD ================= */
+.profile-card {
+  width: 260px;
+  margin: 100px auto 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.55);
+  border-radius: 16px;
+  padding: 25px 20px;
+  backdrop-filter: blur(6px);
+}
+
+/* Profile picture */
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid rgba(255,255,255,0.4);
+}
+
+/* Name */
+.profile-name {
+  font-size: 16px;
+  margin-bottom: 18px;
+  opacity: 0.9;
+}
+
+/* ================= PROFILE MENU ================= */
+.profile-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-menu li {
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  transition: all 0.25s ease;
+}
+
+.profile-menu li:hover {
+  opacity: 1;
+  color: #ff6a6a;
+  transform: translateX(4px);
+}
+
+/* ================= DETAILS AREA ================= */
+.profile-details {
+  max-width: 500px;
+  margin: 20px auto 0;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* Each section */
+.detail-box {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  border-radius: 12px;
+  animation: fadeIn 0.4s ease;
+}
+
+.detail-box.active {
+  display: block;
+}
+
+.detail-box h4 {
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+/* ================= FEEDBACK ================= */
+.detail-box textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  resize: none;
+  margin-bottom: 10px;
+}
+
+/* ================= MEMORIES ================= */
+#memoriesContent {
+  margin-top: 10px;
+}
+
+/* Centered memories grid */
+#memoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  justify-items: center;
+  margin-top: 15px;
+}
+
+/* Memories images */
+#memoriesGrid img {
+  width: 100%;
+  max-width: 140px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#memoriesGrid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255,90,90,0.4);
+}
+
+/* ================= FULLSCREEN VIEWER ================= */
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.image-viewer img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 16px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.image-viewer .nav {
+  position: absolute;
+  font-size: 50px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding: 20px;
+}
+
+.image-viewer .prev { left: 20px; }
+.image-viewer .next { right: 20px; }
+
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRIMSON HUB</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Background Video -->
+  <video
+    class="video-bg"
+    id="bgVideo"
+    autoplay
+    muted
+    playsinline
+  >
+    <source src="zebra/video/demon-slayer.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-left">
+      <a href="profile.html" class="profile-link hidden" id="profileIcon">
+        👤 <span id="profileName">Profile</span>
+      </a>
+      <div class="logo">CRIMSON HUB</div>
+    </div>
+
+    <div class="nav-links">
+      <button onclick="showHome()">Home</button>
+      <button onclick="showStudy()">Study</button>
+      <button id="authBtn">Login</button>
+      <button onclick="showAbout()">About</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section class="section active" id="home">
+    <h1 class="title">CRIMSON HUB</h1>
+    <p class="subtitle">Learn Today, Lead Tomorrow</p>
+  </section>
+
+  <!-- LOGIN -->
+  <section class="section" id="login">
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="text" id="loginId" placeholder="Email or Mobile">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button onclick="loginUser()">Login</button>
+      <p onclick="showSignup()" style="cursor:pointer;margin-top:10px;">Sign Up</p>
+      <p onclick="showForgot()" style="cursor:pointer;">Forgot Password?</p>
+    </div>
+  </section>
+
+  <!-- SIGNUP -->
+  <section class="section" id="signup">
+    <div class="login-box">
+      <h2>Sign Up</h2>
+      <input type="text" id="signupId" placeholder="Email or Mobile">
+      <input type="password" id="signupPassword" placeholder="Password">
+      <input type="text" id="signupInstitute" placeholder="Institute Name">
+      <button onclick="signupUser()">Register</button>
+      <p onclick="showLogin()" style="cursor:pointer;margin-top:10px;">Back to Login</p>
+    </div>
+  </section>
+
+  <!-- FORGOT -->
+  <section class="section" id="forgot">
+    <div class="login-box">
+      <h2>Reset Password</h2>
+      <input type="text" id="forgotId" placeholder="Email or Mobile">
+      <input type="password" id="newPassword" placeholder="New Password">
+      <button onclick="resetPassword()">Reset Password</button>
+      <p onclick="showLogin()" style="cursor:pointer;margin-top:10px;">Back to Login</p>
+    </div>
+  </section>
+
+  <!-- STREAMS -->
+  <section class="section" id="streams">
+    <h1 class="title">Choose Stream</h1>
+    <div class="grid">
+      <button onclick="openArts()">Arts</button>
+      <button onclick="openScience()">Science</button>
+      <button onclick="openCS()">Computer Science</button>
+    </div>
+  </section>
+
+  <!-- ARTS -->
+  <section class="section" id="arts">
+    <h1 class="title">Arts Subjects</h1>
+    <div class="grid">
+      <button onclick="selectSubject('English')">English</button>
+      <button onclick="selectSubject('History')">History</button>
+      <button onclick="selectSubject('Political Science')">Political Science</button>
+    </div>
+  </section>
+
+  <!-- SCIENCE -->
+  <section class="section" id="science">
+    <h1 class="title">Science Subjects</h1>
+    <div class="grid">
+      <button onclick="selectSubject('Biology')">Biology</button>
+      <button onclick="selectSubject('Physics')">Physics</button>
+      <button onclick="selectSubject('Chemistry')">Chemistry</button>
+    </div>
+  </section>
+<!-- COMPUTER SCIENCE -->
+<section class="section" id="cs">
+  <h1 class="title">Computer Science Subjects</h1>
+  <div class="grid">
+    <button onclick="selectSubject('HTML')">Programming</button>
+    <button onclick="selectSubject('CSS')">Data Structures</button>
+    <button onclick="selectSubject('jAVASCIPT')">Databases</button>
+  </div>
+</section>
+
+  <!-- SEMESTER -->
+  <section class="section" id="semester">
+    <h1 class="title">Select Semester</h1>
+    <div class="grid">
+      <button onclick="selectSemester(1)">Semester 1</button>
+      <button onclick="selectSemester(2)">Semester 2</button>
+      <button onclick="selectSemester(3)">Semester 3</button>
+      <button onclick="selectSemester(4)">Semester 4</button>
+      <button onclick="selectSemester(5)">Semester 5</button>
+      <button onclick="selectSemester(6)">Semester 6</button>
+      <button onclick="selectSemester(7)">Semester 7</button>
+      <button onclick="selectSemester(8)">Semester 8</button>
+    </div>
+  </section>
+
+  <!-- OPTIONS -->
+  <section class="section" id="options">
+    <h1 class="title">Choose Option</h1>
+    <div class="grid">
+      <button onclick="openNotes()">Notes</button>
+      <button onclick="openSyllabus()">Syllabus</button>
+      <button onclick="openPYQ()">Previous Year Questions</button>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <section class="section" id="notes-chapters">
+    <h1 class="title">Notes</h1>
+    <div class="login-box" style="max-width:600px;">
+      <ul style="list-style:none;padding:0;line-height:2;">
+        <li onclick="openChapter(1)">📘 Chapter 1</li>
+        <li onclick="openChapter(2)">📘 Chapter 2</li>
+        <li onclick="openChapter(3)">📘 Chapter 3</li>
+        <li onclick="openChapter(4)">📘 Chapter 4</li>
+        <li onclick="openChapter(5)">📘 Chapter 5</li>
+        <li onclick="openChapter(6)">📘 Chapter 6</li>
+        <li onclick="openChapter(7)">📘 Chapter 7</li>
+        <li onclick="openChapter(8)">📘 Chapter 8</li>
+        <li onclick="openChapter(9)">📘 Chapter 9</li>
+        <li onclick="openChapter(10)">📘 Chapter 10</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <h1 class="title">About</h1>
+    <p>This is a study platform under development.</p>
+  </section>
+
+<script>
+fetch("http://localhost:5000/api/health")
+  .then(res => {
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  })
+  .then(data => {
+    console.log("✅ Backend connected:", data);
+  })
+  .catch(err => {
+    console.error("❌ Backend NOT connected:", err.message);
+  });
+</script>
+
+
+  <!-- JS -->
+  <script src="js/ui.js"></script>
+
+  <!-- Freeze video after first play -->
+  <script>
+    const video = document.getElementById("bgVideo");
+    if (video) {
+      video.addEventListener("ended", () => {
+        video.pause();
+        video.currentTime = video.duration;
+      });
+    }
+  </script>
+
+</body>
+</html>to 
