@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -21,7 +22,8 @@ app.use("/api/memories", require("./routes/memories"));
 /* ================= MONGODB ================= */
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/crimsonhub");
+    await mongoose.connect(process.env.MONGODB_URI);
+
     console.log("✅ MongoDB connected");
   } catch (err) {
     console.error("❌ MongoDB connection failed:", err.message);
