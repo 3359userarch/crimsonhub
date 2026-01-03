@@ -168,7 +168,7 @@
   </section>
 
 <script>
-fetch("http://localhost:5000/api/health")
+fetch("https://crimsonhub.onrender.com/api/health")
   .then(res => {
     if (!res.ok) throw new Error("HTTP " + res.status);
     return res.json();

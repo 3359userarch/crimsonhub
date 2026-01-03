@@ -71,7 +71,7 @@ function loginUser() {
   const email = document.getElementById("loginId").value.trim().toLowerCase();
   const password = document.getElementById("loginPassword").value.trim();
 
-  fetch("http://localhost:5000/api/auth/login", {
+  fetch("https://crimsonhub.onrender.com/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -111,7 +111,7 @@ function signupUser() {
     return;
   }
 
-  fetch("http://localhost:5000/api/auth/register", {
+  fetch("https://crimsonhub.onrender.com/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, institute })
@@ -139,7 +139,7 @@ function resetPassword() {
     return;
   }
 
-  fetch("http://localhost:5000/api/auth/forgot", {
+  fetch("https://crimsonhub.onrender.com/api/auth/forgot", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
