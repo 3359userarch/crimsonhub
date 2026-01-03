@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="5oOGrwPuGmKF09KouiwZqyJDDvCgfjYlpHWXratznTU" />
   <title>CRIMSON HUB</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -23,31 +21,21 @@
   <div class="overlay"></div>
 
   <!-- NAVBAR -->
- <nav>
-  <div class="nav-left">
-    <!-- Profile icon (shown after login) -->
-    <a href="profile.html" class="profile-link hidden" id="profileIcon">
-      👤
-    </a>
-<div id="profileMenu" class="profile-menu hidden">
-    <button onclick="openProfile()">Profile</button>
-    <button onclick="showAbout()">About</button>
-    <button onclick="logout()">Logout</button>
-  </div>
-    <!-- Logo (shown before login only) -->
-    <div class="logo" id="navLogo">CRIMSON HUB</div>
-  </div>
+  <nav>
+    <div class="nav-left">
+      <a href="profile.html" class="profile-link hidden" id="profileIcon">
+        👤 <span id="profileName">Profile</span>
+      </a>
+      <div class="logo">CRIMSON HUB</div>
+    </div>
 
-  <div class="nav-links">
-    <button onclick="showHome()">Home</button>
-
-    <!-- Study will be enabled after login later -->
-    <button id="studyBtn" disabled>Study</button>
-
-    <button id="authBtn">Login</button>
-    <button onclick="showAbout()">About</button>
-  </div>
-</nav>
+    <div class="nav-links">
+      <button onclick="showHome()">Home</button>
+      <button onclick="showStudy()">Study</button>
+      <button id="authBtn">Login</button>
+      <button onclick="showAbout()">About</button>
+    </div>
+  </nav>
 
   <!-- HOME -->
   <section class="section active" id="home">
@@ -180,7 +168,7 @@
   </section>
 
 <script>
-fetch("https://crimsonhub.onrender.com/api/health")
+fetch("http://localhost:5000/api/health")
   .then(res => {
     if (!res.ok) throw new Error("HTTP " + res.status);
     return res.json();
@@ -209,4 +197,4 @@ fetch("https://crimsonhub.onrender.com/api/health")
   </script>
 
 </body>
-</html>to
+</html>to 

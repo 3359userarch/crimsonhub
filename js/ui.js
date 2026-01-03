@@ -66,11 +66,12 @@ function updateAuthButton(isLoggedIn) {
 }
 
 /* ================= LOGIN (BACKEND) ================= */
+
 function loginUser() {
   const email = document.getElementById("loginId").value.trim().toLowerCase();
   const password = document.getElementById("loginPassword").value.trim();
 
-  fetch("https://crimsonhub.onrender.com/api/auth/login", {
+  fetch("http://localhost:5000/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -82,7 +83,6 @@ function loginUser() {
         return;
       }
 
-      // ✅ Save login state
       localStorage.setItem("profile", JSON.stringify({
         loggedIn: true,
         token: data.token,
@@ -90,19 +90,10 @@ function loginUser() {
         institute: data.user.institute
       }));
 
-      // ✅ NAVBAR UX FIX
       document.getElementById("profileIcon").classList.remove("hidden");
-      document.getElementById("profileName").textContent = "Profile";
+      document.getElementById("profileName").textContent = data.user.email;
 
-      // 🔥 Hide CRIMSON HUB logo (mobile space saver)
-      document.getElementById("navLogo").style.display = "none";
-
-      // 🔓 Enable Study
-      document.querySelector('button[onclick="showStudy()"]').disabled = false;
-
-      // 🔄 Login → Logout
       updateAuthButton(true);
-
       showStudy();
     })
     .catch(() => alert("Backend not reachable"));
@@ -120,7 +111,7 @@ function signupUser() {
     return;
   }
 
-  fetch("https://crimsonhub.onrender.com/api/auth/register", {
+  fetch("http://localhost:5000/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, institute })
@@ -148,7 +139,7 @@ function resetPassword() {
     return;
   }
 
-  fetch("https://crimsonhub.onrender.com/api/auth/forgot", {
+  fetch("http://localhost:5000/api/auth/forgot", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -169,17 +160,7 @@ function resetPassword() {
 
 function logout() {
   localStorage.removeItem("profile");
-
-  // Hide profile menu
   document.getElementById("profileIcon").classList.add("hidden");
-
-  // Show CRIMSON HUB logo again
-  document.getElementById("navLogo").style.display = "flex";
-
-  // Disable Study again
-  const studyBtn = document.querySelector('button[onclick="showStudy()"]');
-  if (studyBtn) studyBtn.disabled = true;
-
   updateAuthButton(false);
   showHome();
 }

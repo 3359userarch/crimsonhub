@@ -1,6 +1,7 @@
 /* ================= GLOBAL STATE ================= */
 let currentSubject = "";
 let currentSemester = 0;
+let isLoggedIn = false;
 
 /* ================= UTILITY ================= */
 function hideAll() {
@@ -9,29 +10,62 @@ function hideAll() {
   });
 }
 
-/* ================= BASIC NAVIGATION ================= */
+/* ================= NAVIGATION ================= */
 function showHome() {
   hideAll();
-  document.getElementById("home")?.classList.add("active");
+  document.getElementById("home").classList.add("active");
 }
 
 function showLogin() {
   hideAll();
-  document.getElementById("login")?.classList.add("active");
+  document.getElementById("login").classList.add("active");
 }
 
 function showAbout() {
   hideAll();
-  document.getElementById("about")?.classList.add("active");
+  document.getElementById("about").classList.add("active");
 }
 
-/* ================= PROFILE STORAGE ================= */
-function updateProfile(data) {
-  const profile = JSON.parse(localStorage.getItem("profile")) || {};
-  localStorage.setItem(
-    "profile",
-    JSON.stringify({ ...profile, ...data })
-  );
+/* ================= AUTH ================= */
+function showStreams() {
+  hideAll();
+  document.getElementById("streams").classList.add("active");
+
+  // login state
+  isLoggedIn = true;
+
+  // show profile icon
+  const profileIcon = document.getElementById("profileIcon");
+  if (profileIcon) profileIcon.classList.remove("hidden");
+
+  // update profile name
+  updateProfileName();
+
+  // change Login → Logout
+  const authBtn = document.getElementById("authBtn");
+  if (authBtn) {
+    authBtn.textContent = "Logout";
+    authBtn.onclick = logout;
+  }
+}
+
+function logout() {
+  isLoggedIn = false;
+
+  // hide profile icon
+  const profileIcon = document.getElementById("profileIcon");
+  if (profileIcon) profileIcon.classList.add("hidden");
+
+  // change Logout → Login
+  const authBtn = document.getElementById("authBtn");
+  if (authBtn) {
+    authBtn.textContent = "Login";
+    authBtn.onclick = showLogin;
+  }
+
+  // go home
+  hideAll();
+  document.getElementById("home").classList.add("active");
 }
 
 /* ================= PROFILE UI ================= */
@@ -46,73 +80,46 @@ function updateProfileName() {
       : "Profile";
 }
 
-/* ================= AUTH FLOW ================= */
-function showStreams() {
-  hideAll();
-  document.getElementById("streams")?.classList.add("active");
-
-  // show profile icon
-  const profileIcon = document.getElementById("profileIcon");
-  if (profileIcon) profileIcon.classList.remove("hidden");
-
-  // update profile name
-  updateProfileName();
-
-  // hide logo on mobile
-  const logo = document.getElementById("navLogo");
-  if (logo) logo.style.display = "none";
-
-  // change Login → Logout
-  const authBtn = document.getElementById("authBtn");
-  if (authBtn) {
-    authBtn.textContent = "Logout";
-    authBtn.onclick = logout;
-  }
-}
-
 /* ================= STREAMS ================= */
 function openArts() {
   hideAll();
-  document.getElementById("arts")?.classList.add("active");
+  document.getElementById("arts").classList.add("active");
 }
 
 function openScience() {
   hideAll();
-  document.getElementById("science")?.classList.add("active");
+  document.getElementById("science").classList.add("active");
 }
 
 function openBiology() {
   hideAll();
-  document.getElementById("biology")?.classList.add("active");
+  document.getElementById("biology").classList.add("active");
 }
 
 function openCS() {
   hideAll();
-  document.getElementById("cs")?.classList.add("active");
+  document.getElementById("cs").classList.add("active");
 }
 
 /* ================= SUBJECT FLOW ================= */
 function selectSubject(subject) {
   currentSubject = subject;
-  updateProfile({ subject });
   hideAll();
-  document.getElementById("semester")?.classList.add("active");
+  document.getElementById("semester").classList.add("active");
 }
 
 /* ================= COMPUTER SCIENCE LEVEL ================= */
 function openCSLevel(subject) {
   currentSubject = subject;
-  updateProfile({ subject });
   hideAll();
-  document.getElementById("cs-level")?.classList.add("active");
+  document.getElementById("cs-level").classList.add("active");
 }
 
 /* ================= SEMESTER ================= */
 function selectSemester(sem) {
   currentSemester = sem;
-  updateProfile({ semester: sem });
   hideAll();
-  document.getElementById("options")?.classList.add("active");
+  document.getElementById("options").classList.add("active");
 }
 
 /* ================= OPTIONS ================= */
@@ -131,7 +138,7 @@ function openNotes() {
 
 function openPYQ() {
   hideAll();
-  document.getElementById("pyq-options")?.classList.add("active");
+  document.getElementById("pyq-options").classList.add("active");
 }
 
 /* ================= PYQ ================= */
@@ -155,87 +162,117 @@ function openPYQAnswers() {
   );
 }
 
-/* ================= HASH NAVIGATION ================= */
-function navigate(sectionId) {
-  hideAll();
-  document.getElementById(sectionId)?.classList.add("active");
-  location.hash = sectionId;
-}
-
-/* ================= SAFE FUNCTION HOOKING ================= */
-showHome = () => navigate("home");
-showLogin = () => navigate("login");
-showAbout = () => navigate("about");
-
-if (typeof showSignup === "function") {
-  showSignup = () => navigate("signup");
-}
-
-if (typeof showForgot === "function") {
-  showForgot = () => navigate("forgot");
-}
-
-if (typeof showStudy === "function") {
-  showStudy = () => {
-    const profile = JSON.parse(localStorage.getItem("profile"));
-    if (profile && profile.loggedIn) {
-      navigate("streams");
-    } else {
-      navigate("login");
-    }
-  };
-}
-
-openArts = () => navigate("arts");
-openScience = () => navigate("science");
-openCS = () => navigate("cs");
-
-/* ================= BACK / FORWARD HANDLER ================= */
-window.addEventListener("hashchange", () => {
-  const section = location.hash.replace("#", "");
-  if (!section) return;
-  hideAll();
-  document.getElementById(section)?.classList.add("active");
-});
-
 /* ================= INIT ================= */
 document.addEventListener("DOMContentLoaded", () => {
   updateProfileName();
 
-  // restore section on refresh
-  const section = location.hash.replace("#", "") || "home";
-  hideAll();
-  document.getElementById(section)?.classList.add("active");
-
-  // backend health check (silent)
-  fetch("https://crimsonhub.onrender.com/api/health")
+  // backend health check (safe, silent)
+  fetch("http://localhost:5000/api/health")
     .then(res => res.json())
     .then(data => {
       console.log("Backend status:", data.status);
       window.backendAvailable = true;
     })
     .catch(() => {
-      console.log("Backend not available, frontend-only mode");
+      console.log("Backend not available, using frontend-only mode");
       window.backendAvailable = false;
     });
 });
-/* ================= PROFILE DROPDOWN TOGGLE ================= */
 
-function toggleProfileMenu() {
-  const menu = document.getElementById("profileMenu");
-  if (!menu) return;
+/* ================= POPSTATE (BACK BUTTON) ================= */
+window.addEventListener("popstate", e => {
+  if (!e.state || !e.state.section) return;
 
-  menu.classList.toggle("hidden");
+  hideAll();
+  const el = document.getElementById(e.state.section);
+  if (el) el.classList.add("active");
+});
+
+/* ================= INIT STATE ================= */
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = location.hash.replace("#", "");
+  if (hash) {
+    hideAll();
+    const el = document.getElementById(hash);
+    if (el) el.classList.add("active");
+  } else {
+    history.replaceState({ section: "home" }, "", "#home");
+  }
+});
+/* ================= HASH NAVIGATION (BACK/FORWARD FIX) ================= */
+
+/* map section */
+function navigate(sectionId) {
+  hideAll();
+  const el = document.getElementById(sectionId);
+  if (el) el.classList.add("active");
+  location.hash = sectionId;
 }
 
-/* close menu when clicking outside */
-document.addEventListener("click", e => {
-  const profileIcon = document.getElementById("profileIcon");
-  const menu = document.getElementById("profileMenu");
+/* hook existing navigation */
+const _showHome = showHome;
+showHome = () => navigate("home");
 
-  if (!menu || !profileIcon) return;
+const _showLogin = showLogin;
+showLogin = () => navigate("login");
 
-  if (!profileIcon.contains(e.target) && !menu.contains(e.target)) {
-    menu.classList.add("hidden");
+const _showSignup = showSignup;
+showSignup = () => navigate("signup");
+
+const _showForgot = showForgot;
+showForgot = () => navigate("forgot");
+
+const _showAbout = showAbout;
+showAbout = () => navigate("about");
+
+const _showStudy = showStudy;
+showStudy = () => {
+  const profile = JSON.parse(localStorage.getItem("profile"));
+  if (profile && profile.loggedIn) {
+    navigate("streams");
+  } else {
+    navigate("login");
   }
+};
+
+/* stream flow */
+const _openArts = openArts;
+openArts = () => navigate("arts");
+
+const _openScience = openScience;
+openScience = () => navigate("science");
+
+const _openCS = openCS;
+openCS = () => navigate("cs");
+
+const _selectSubject = selectSubject;
+selectSubject = subject => {
+  updateProfile({ subject });
+  navigate("semester");
+};
+
+const _selectSemester = selectSemester;
+selectSemester = sem => {
+  updateProfile({ semester: sem });
+  navigate("options");
+};
+
+const _openNotes = openNotes;
+openNotes = () => navigate("notes-chapters");
+
+/* BACK / FORWARD HANDLER */
+window.addEventListener("hashchange", () => {
+  const section = location.hash.replace("#", "");
+  if (!section) return;
+  hideAll();
+  const el = document.getElementById(section);
+  if (el) el.classList.add("active");
+});
+
+/* INIT ON REFRESH */
+window.addEventListener("DOMContentLoaded", () => {
+  const section = location.hash.replace("#", "") || "home";
+  hideAll();
+  const el = document.getElementById(section);
+  if (el) el.classList.add("active");
 });

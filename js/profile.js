@@ -89,7 +89,7 @@ function goHome() {
 function checkMemoriesAccess() {
   const profile = JSON.parse(localStorage.getItem("profile")) || {};
 
-  fetch("https://crimsonhub.onrender.com/api/memories/list", {
+  fetch("http://localhost:5000/api/memories/list", {
     method: "POST",
     headers: {
   "Content-Type": "application/json",
