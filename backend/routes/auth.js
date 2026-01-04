@@ -40,7 +40,7 @@ router.post("/register", async (req, res) => {
 });
 
 /* =========================
-   LOGIN
+   LOGIN  (FIXED FOR OLD USERS)
 ========================= */
 router.post("/login", async (req, res) => {
   try {
@@ -51,7 +51,10 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      email: { $regex: new RegExp("^" + email + "$", "i") }
+    });
+
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -91,7 +94,10 @@ router.post("/forgot", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      email: { $regex: new RegExp("^" + email + "$", "i") }
+    });
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -104,7 +110,5 @@ router.post("/forgot", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
-module.exports = router;
 
 module.exports = router;
