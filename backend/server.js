@@ -7,7 +7,12 @@ const PORT = process.env.PORT || 5000;
 
 
 /* ================= MIDDLEWARE ================= */
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 /* ================= ROUTES ================= */

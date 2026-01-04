@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateProfileName();
 
   // backend health check (safe, silent)
-  fetch("http://localhost:5000/api/health")
+  fetch("https://crimsonhub.onrender.com/api/health")
     .then(res => res.json())
     .then(data => {
       console.log("Backend status:", data.status);
