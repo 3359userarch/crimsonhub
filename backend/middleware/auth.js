@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "crimsonhub_secret_key";
 
-
 module.exports = function (req, res, next) {
   const authHeader = req.headers.authorization;
 

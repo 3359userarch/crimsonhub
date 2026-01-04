@@ -5,9 +5,7 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-// 🔐 CHANGE THIS LATER (use .env in production)
 const JWT_SECRET = process.env.JWT_SECRET || "crimsonhub_secret_key";
-
 
 /* =========================
    REGISTER
@@ -15,8 +13,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "crimsonhub_secret_key";
 router.post("/register", async (req, res) => {
   try {
     let { email, password, institute } = req.body;
-email = email.toLowerCase();
-
+    email = email.toLowerCase();
 
     if (!email || !password || !institute) {
       return res.status(400).json({ message: "All fields are required" });
@@ -36,12 +33,8 @@ email = email.toLowerCase();
     });
 
     await user.save();
-
-    console.log("✅ Registered:", email);
     res.json({ message: "Registration successful" });
-
   } catch (err) {
-    console.error("❌ Register error:", err.message);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -52,8 +45,7 @@ email = email.toLowerCase();
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
-email = email.toLowerCase();
-
+    email = email.toLowerCase();
 
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
@@ -75,18 +67,14 @@ email = email.toLowerCase();
       { expiresIn: "1d" }
     );
 
-    console.log("✅ Login:", email);
     res.json({
-      message: "Login successful",
       token,
       user: {
         email: user.email,
         institute: user.institute,
       },
     });
-
   } catch (err) {
-    console.error("❌ Login error:", err.message);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -97,8 +85,7 @@ email = email.toLowerCase();
 router.post("/forgot", async (req, res) => {
   try {
     let { email, password } = req.body;
-email = email.toLowerCase();
-
+    email = email.toLowerCase();
 
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
@@ -114,9 +101,10 @@ email = email.toLowerCase();
 
     res.json({ message: "Password updated successfully" });
   } catch (err) {
-    console.error("❌ Forgot error:", err.message);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+module.exports = router;
 
 module.exports = router;
