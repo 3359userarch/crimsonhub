@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -19,6 +20,7 @@ app.use(express.json());
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, message: "Backend connected" });
 });
+
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/memories", require("./routes/memories"));
