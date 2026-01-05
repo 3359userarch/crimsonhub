@@ -1,3 +1,5 @@
+
+
 /* ================= GLOBAL STATE ================= */
 let currentSubject = "";
 let currentSemester = 0;
@@ -241,9 +243,12 @@ openArts = () => navigate("arts");
 
 const _openScience = openScience;
 openScience = () => navigate("science");
+const _openBiology = openBiology;
+openBiology = () => navigate("biology");
 
 const _openCS = openCS;
 openCS = () => navigate("cs");
+
 
 const _selectSubject = selectSubject;
 selectSubject = subject => {
@@ -276,3 +281,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const el = document.getElementById(section);
   if (el) el.classList.add("active");
 });
+function showBiology() {
+  openBiology();
+}
